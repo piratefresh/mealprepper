@@ -25,41 +25,60 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  *
  */
 
+//  Defines the root location
+const root = `${__dirname}/src`;
+
+// Defines the styles location
+const styles= `${root}/styles`;
+
 module.exports = {
 	mode: 'development',
-	entry: './src/app.js',
+	entry: `${root}/app/root.module.js`,
 	devtool: 'source-map',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'
 	  },
-	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin({
+	plugins: [new webpack.ProgressPlugin(),   new HtmlWebpackPlugin({
 		template: 'src/index.html',
-		filename: './index.html'
-	}),],
+		inject: 'body',
+	})],
 
 	module: {
 		rules: [
 			{
 				test: /\.html$/,
-				use: [{ loader: 'html-loader', options: { minimize: true } }]
+				use: [
+					{
+						loader: 'ngtemplate-loader',
+						options: {
+								relativeTo: path.resolve(__dirname, './src/app'),
+						}
+				},
+					{ loader: 'html-loader', options: { minimize: true } }],
+					exclude: /index\.html/
 			},
 			{
 				test: /.(js|jsx)$/,
 				include: [path.resolve(__dirname, 'src')],
 				exclude: /node_modules/,
-				use: 'babel-loader',
+				use: ['babel-loader', 'auto-ngtemplate-loader'],
 			},
 			{
 				test: /\.scss$/,
-				use: [
-				  'style-loader',
-				  'css-loader',
-				  'sass-loader'
-				]
-			  },
+				use: [{
+						loader: "style-loader"
+				}, {
+						loader: "css-loader"
+				}, {
+						loader: "sass-loader",
+						options: {
+								includePaths: [styles]
+						}
+				}]
+		},
 			  {
-				test: /\.svg$/,
+				test: /\.(png|jpg|gif|eot|woff|woff2|svg|ttf)$/,
 				use: 'file-loader'
 			  },
 			  {

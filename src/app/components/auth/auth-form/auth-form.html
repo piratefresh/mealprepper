@@ -1,0 +1,43 @@
+<form name="authForm" novalidate ng-submit="$ctrl.submitForm();">
+
+  <div class="social-logins">
+      <label>
+          <button ng-click="$ctrl.loginGoogle();" class="social-button">
+              <img src="../../../../img/search.svg" /> {{ $ctrl.googleText}}
+          </button> 
+      </label>
+      
+      <label>
+          <button class="social-button">
+              <img src="../../../../img/search.svg" /> {{ $ctrl.googleText}}
+          </button>
+      </label>
+  </div>
+
+  <div class="email-login">
+    <label>
+        <input
+          type="email"
+          name="email"
+          required="required"
+          placeholder="Enter your email"
+          ng-model="$ctrl.user.email">
+      <label>
+        <input
+          type="password"
+          name="password"
+          required="required"
+          placeholder="Enter your password"
+          ng-model="$ctrl.user.password">
+    </label>
+  </div>
+
+  
+
+    <button type="submit" ng-disabled="authForm.$invalid" class="auth-button">
+      {{ $ctrl.button }}
+    </button>
+  <div ng-if="$ctrl.message">
+    {{ $ctrl.message }}
+  </div>
+</form>

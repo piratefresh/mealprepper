@@ -12,12 +12,17 @@
   "license": "ISC",
   "dependencies": {
     "@uirouter/angularjs": "^1.0.22",
-    "angular": "^1.7.8"
+    "angular": "^1.7.8",
+    "angular-loading-bar": "^0.9.0",
+    "angular-ui-router": "^1.0.22",
+    "angularfire": "^2.3.0",
+    "firebase": "^6.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@webpack-cli/init": "^0.2.2",
+    "auto-ngtemplate-loader": "^2.0.1",
     "babel-loader": "^8.0.6",
     "babel-plugin-angularjs-annotate": "^0.10.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -27,6 +32,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.0.0-beta.5",
     "ng-annotate-loader": "^0.6.1",
+    "ngtemplate-loader": "^2.0.1",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",

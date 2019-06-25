@@ -1,0 +1,17 @@
+<div class="auth">
+  <h1>Meal Preppers</h1>
+  <auth-form
+    user="$ctrl.user"
+    message="{{ $ctrl.error }}"
+    button="Continue"
+    google-text="Login With Google"
+    login-google="$ctrl.loginGoogle();"
+    on-submit="$ctrl.loginUser($event);">
+  </auth-form>
+</div> 
+
+<div class="auth__info">
+  <a href="" ui-sref="auth.register">
+    Don't have an account? Create one here.
+  </a>
+</div>

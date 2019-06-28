@@ -1,13 +1,15 @@
 import firebase from 'firebase';
 
 export class AuthService {
-  constructor($firebaseAuth) {
+  constructor($firebaseAuth, $firebaseObject, $q) {
     'ngInject';
 
     this.provider = new firebase.auth.GoogleAuthProvider();
+    const ref = firebase.database().ref();
 
     this.auth = $firebaseAuth(firebase.auth());
     this.authData = null;
+
     this.onSignIn = (user) => {
       this.authData = user;
       return this.auth.$requireSignIn();
@@ -17,8 +19,16 @@ export class AuthService {
       return this.authData;
     };
     this.clearAuthData = () => {
+      console.log('clearing authData')
       this.authData = null;
     };
+    this.auth.$onAuthStateChanged(user => {
+        if(user) {
+          this.authData = user;
+          console.log('hit on auth')
+          return this.authData;
+        } 
+    })
   }
   
   login(user) {
@@ -37,11 +47,13 @@ export class AuthService {
       .then(this.clearAuthData);
   }
   requireAuthentication() {
+    console.log(this.authData)
     return this.auth
-      .$requireSignIn();
+    .$waitForSignIn().then(this.onSignIn);
 
   }
   isAuthenticated() {
+    console.log(this.authData)
     return !!this.authData;
   }
   getUser() {
@@ -58,6 +70,7 @@ export class AuthService {
     return this.auth 
       .$onAuthStateChanged((user) => {
         if (user) {
+          console.log('hit on auth' + 2)
           return this.authData = user;
         } else {
          return this.authData = null;

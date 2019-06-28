@@ -35,24 +35,25 @@ export const auth = angular
         default: firebaseConfig.databaseURL,
       });
   })
-  .run(($transitions, $state, AuthService) => {
+  .run(($transitions, $state, AuthService, $timeout) => {
     'ngInject';
-    
+
     $transitions.onStart({
       to: (state) => !!(state.data && state.data.requiredAuth),
     }, () => {
       return AuthService
         .requireAuthentication()
         .catch((error) => {
-          console.log(error)
           $state.target('auth.login')
         });
     });
     $transitions.onStart({
       to: 'auth.*',
     }, () => {
-      console.log(AuthService)
-      if (AuthService.isAuthenticated()) return $state.target('app');
+      return $timeout(() => {
+        if (AuthService.isAuthenticated()) return $state.target('app');
+      }, 1000);
+      
     });
   })
   .service('AuthService', AuthService)
